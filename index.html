@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #ffd6e7, #fff0f5);
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #ff4f87;
+      font-size: 2.5em;
+    }
+
+    p {
+      color: #444;
+      font-size: 1.1em;
+    }
+
+    button {
+      background: #ff6fa5;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 20px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #ff4f87;
+    }
+
+    .card {
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: none;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 20px;
+      margin-top: 15px;
+    }
+
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      color: #ff6fa5;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Happy Birthday Sayang 🎂💖</h1>
+    <p>Aku punya sesuatu buat kamu...</p>
+    <button onclick="showSurprise()">Klik di sini 🎁</button>
+
+    <div class="card" id="surpriseCard">
+      <h2>For You 💕</h2>
+      <p>
+        Happy birthday yaa 🥺💗<br><br>
+        Semoga hari kamu penuh bahagia, penuh tawa, dan semua hal baik datang ke kamu.
+        Makasih ya udah jadi orang yang spesial banget.
+        Aku harap kamu selalu sehat, selalu dikelilingi cinta, dan semua impian kamu satu-satu tercapai ✨
+      </p>
+      <img src="https://via.placeholder.com/300x200.png?text=Foto+Kalian" alt="foto">
+      <p><b>I love you always 💞</b></p>
+    </div>
+  </div>
+
+  <script>
+    function showSurprise() {
+      document.getElementById("surpriseCard").style.display = "block";
+
+      for (let i = 0; i < 25; i++) {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+    }
+  </script>
+</body>
+</html>
