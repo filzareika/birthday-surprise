@@ -1,91 +1,357 @@
-<script>
-  let currentPage = 1;
-  const totalPages = 12;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You 💖</title>
+  <style>
+    * { box-sizing: border-box; }
 
-  const music = document.getElementById("bgMusic");
-  let musicStarted = false;
-
-  function showPage(pageNumber) {
-    for (let i = 1; i <= totalPages; i++) {
-      document.getElementById("page" + i).classList.remove("active");
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #ffdce8, #fff5f8);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #4a3b43;
     }
 
-    document.getElementById("page" + pageNumber).classList.add("active");
+    .card {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 24px;
+      padding: 30px 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      text-align: center;
+    }
 
-    handleMusicByPage(pageNumber);
-  }
+    h1, h2, p { margin-top: 0; }
 
-  function handleMusicByPage(pageNumber) {
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 12px 20px;
+      margin: 8px;
+      background: #ff8fb1;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      background: #ff739f;
+    }
+
+    .secondary {
+      background: #c9a4b4;
+    }
+
+    input {
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #f1bfd0;
+      font-size: 16px;
+      outline: none;
+      margin-top: 12px;
+      margin-bottom: 10px;
+    }
+
+    .photo {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      border-radius: 20px;
+      margin: 18px auto;
+      display: block;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    }
+
+    .video-box {
+      margin: 18px auto;
+    }
+
+    video {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+      margin-bottom: 10px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 18px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .poem {
+      text-align: left;
+      white-space: pre-line;
+      line-height: 1.8;
+      font-size: 16px;
+      background: #fff8fb;
+      padding: 20px;
+      border-radius: 18px;
+      margin-top: 18px;
+    }
+
+    .nameText {
+      color: #ff5e92;
+      font-weight: bold;
+    }
+
+    .small-text {
+      font-size: 14px;
+      color: #8c6d79;
+      margin-top: 8px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+
+    <div class="page active" id="page1">
+      <h1>Halo, Kamu! 💖</h1>
+      <p>Aku bikin sesuatu kecil buat kamu hehe</p>
+      <button onclick="nextPage()">halo juga</button>
+    </div>
+
+    <div class="page" id="page2">
+      <h2>lenalan dulu boleh kali 😁😁</h2>
+      <p>ketik nama kamu dongg</p>
+      <input type="text" id="nameInput" placeholder="ketik nama di sini..." />
+      <br>
+      <button onclick="saveNameAndNext()">oke salam kenal</button>
+    </div>
+
+    <div class="page" id="page3">
+      <h2>apakah benar ini foto kamu?</h2>
+      <img src="foto1.jpg" alt="foto 1" class="photo" />
+      <button onclick="nextPage()">iya</button>
+    </div>
+
+    <div class="page" id="page4">
+      <h2>apakah benar ini foto kamu?</h2>
+      <img src="foto2.jpg" alt="foto 2" class="photo" />
+      <button onclick="nextPage()">iya</button>
+    </div>
+
+    <div class="page" id="page5">
+      <h2>apakah benar ini foto kamu?</h2>
+      <img src="foto3.jpg" alt="foto 3" class="photo" />
+      <button onclick="nextPage()">iya</button>
+    </div>
+
+    <div class="page" id="page6">
+      <h2>gimana sih? daritadi udah di klik belom button-nya?</h2>
+      <button onclick="nextPage()">udah woyy</button>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+    <div class="page" id="page7">
+      <h2>hehe oke2, yaudah kita lanjut yaa... ada yg mau menyampaikan sesuatu nih</h2>
+      <button onclick="nextPage()">siapa tuhh</button>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+    <div class="page" id="page8">
+      <h2>ini diaa 👀</h2>
+      <div class="video-box">
+        <video id="birthdayVideo" controls>
+          <source src="video.mp4" type="video/mp4" />
+          browser kamu belum support video
+        </video>
+      </div>
+      <button onclick="goNextFromVideo()">next</button>
+      <button class="secondary" onclick="goBackFromVideo()">kembali</button>
+    </div>
+
+    <div class="page" id="page9">
+      <h2>sedikit kenangan buat <span class="nameText" id="showName1">kamu</span> 🫶</h2>
+      <div class="gallery">
+        <img src="galeri1.jpg" alt="galeri 1">
+        <img src="galeri2.jpg" alt="galeri 2">
+        <img src="galeri3.jpg" alt="galeri 3">
+      </div>
+      <button onclick="nextPage()">next</button>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+    <div class="page" id="page10">
+      <h2>masih ada lagii 💕</h2>
+      <div class="gallery">
+        <img src="galeri4.jpg" alt="galeri 4">
+        <img src="galeri5.jpg" alt="galeri 5">
+        <img src="galeri6.jpg" alt="galeri 6">
+      </div>
+      <button onclick="nextPage()">next</button>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+    <div class="page" id="page11">
+      <h2>yaah udah habis dehh</h2>
+      <p>eh tapi bentar... masih ada satu hal lagi</p>
+      <button onclick="nextPage()">next</button>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+    <div class="page" id="page12">
+      <h2>for you, always 💌</h2>
+      <div class="poem">they never quite asked you, did they— 
+when they placed the sun in your hands
+and said, <i>be bright, for everyone</i>—
+in a world that gently, yet firmly, decides
+the first daughter must always be made of light.
+
+so you learned how to glow without question,
+called <i>strong</i> each time you swallowed your ache,
+called <i>capable</i> when you carried what was never yours—
+the kind of girl who says <i>it’s alright</i>
+even when it quietly, deeply, isn’t.
+
+you became both shelter and silence,
+tending to everyone else’s storms
+while folding your own into something unseen—
+and somewhere between loving and enduring,
+you forgot you were meant to be held too.
+
+but oh, my dearest—thank you.
+for staying, when leaving would have been softer,
+for every version of you that chose to remain gentle,
+for being the home for others
+when you had nowhere to rest yourself.
+
+and I hope, someday, life chooses you back—
+softly, without demand, without condition—
+may your shoulders unlearn their constant burden,
+may you finally feel what it is to be cared for,
+and know this: you are allowed to stop, and still be loved.</div>
+
+      <p class="small-text">made with love for <span class="nameText" id="showName2">you</span> 💗</p>
+      <button class="secondary" onclick="prevPage()">kembali</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 12;
+
+    const music = document.getElementById("bgMusic");
     const video = document.getElementById("birthdayVideo");
+    let musicStarted = false;
 
-    if (pageNumber === 8) {
-      music.pause();
-      if (video) {
-        video.currentTime = 0;
-        video.play().catch(() => {});
+    function showPage(pageNumber) {
+      for (let i = 1; i <= totalPages; i++) {
+        document.getElementById("page" + i).classList.remove("active");
       }
-    } else {
-      if (video) {
-        video.pause();
+      document.getElementById("page" + pageNumber).classList.add("active");
+      handleMusicByPage(pageNumber);
+    }
+
+    function handleMusicByPage(pageNumber) {
+      if (pageNumber === 8) {
+        if (music) music.pause();
+        if (video) {
+          video.currentTime = 0;
+          video.play().catch(() => {});
+        }
+      } else {
+        if (video) video.pause();
+        if (musicStarted && music) {
+          music.play().catch(() => {});
+        }
       }
-      if (musicStarted) {
+    }
+
+    function startMusicOnce() {
+      if (!musicStarted && music) {
+        musicStarted = true;
         music.play().catch(() => {});
       }
     }
-  }
 
-  function startMusicOnce() {
-    if (!musicStarted) {
-      musicStarted = true;
-      music.play().catch(() => {});
-    }
-  }
-
-  function nextPage() {
-    startMusicOnce();
-    if (currentPage < totalPages) {
-      currentPage++;
-      showPage(currentPage);
-    }
-  }
-
-  function prevPage() {
-    if (currentPage > 1) {
-      currentPage--;
-      showPage(currentPage);
-    }
-  }
-
-  function saveNameAndNext() {
-    startMusicOnce();
-
-    const name = document.getElementById("nameInput").value.trim();
-    const finalName = name || "kamu";
-
-    document.getElementById("showName1").innerText = finalName;
-    document.getElementById("showName2").innerText = finalName;
-
-    nextPage();
-  }
-
-  function goNextFromVideo() {
-    const video = document.getElementById("birthdayVideo");
-    if (video) {
-      video.pause();
+    function nextPage() {
+      startMusicOnce();
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
     }
 
-    if (currentPage < totalPages) {
-      currentPage++;
-      showPage(currentPage);
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
     }
-  }
 
-  function goBackFromVideo() {
-    const video = document.getElementById("birthdayVideo");
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
+    function saveNameAndNext() {
+      startMusicOnce();
+      const name = document.getElementById("nameInput").value.trim();
+      const finalName = name || "kamu";
+      document.getElementById("showName1").innerText = finalName;
+      document.getElementById("showName2").innerText = finalName;
+      nextPage();
     }
-    prevPage();
-  }
-</script>
+
+    function goNextFromVideo() {
+      if (video) video.pause();
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function goBackFromVideo() {
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+      prevPage();
+    }
+  </script>
+</body>
+</html>
